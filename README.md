@@ -1,14 +1,49 @@
-# Welcome to your CDK TypeScript project!
+# toomuchof.me backend
 
-This is a blank project for TypeScript development with CDK.
+An AWS CDK ([Cloud Development Kit](https://github.com/aws/aws-cdk)) powered serverless backend.
 
-The `cdk.json` file tells the CDK Toolkit how to execute your app.
+## Architecture
 
-## Useful commands
+The backend is a simple typescript implementation for one of the very many common serverless [cdk-patterns](https://github.com/cdk-patterns/) - the simple webservice.
 
+[architecture-diagram]: https://raw.githubusercontent.com/cdk-patterns/serverless/master/the-simple-webservice/img/architecture.png "Simple architecture diagram sourced from simple webservice cdk pattern"
+
+![architecture diagram][architecture-diagram]
+
+## Getting help
+
+- **Email** 108krohan [at] gmail [dot] com.
+- **Instagram** direct message @kaiserohan (I be always scrollin')
+- **TODO** "What's up? / Tell me / Contact us" page on website
+
+## Contributing
+I welcome community contributions and pull requests. Here's what happens: 
+1. Open issue
+2. Design (optional)
+3. Work your magic
+4. Commit
+5. Pull request
+6. Merge
+
+#### Getting Started
+Commands to build and see for yourself on your local computer: 
+```
+$ git clone https://github.com/108krohan/toomuchof-backend
+$ cd toomuchof-backend
+$ npm install
+$ npm run build
+```
+
+#### Common commands 
+ * `npm install`     install the required dependencies
  * `npm run build`   compile typescript to js
  * `npm run watch`   watch for changes and compile
  * `npm run test`    perform the jest unit tests
  * `cdk deploy`      deploy this stack to your default AWS account/region
  * `cdk diff`        compare deployed stack with current state
  * `cdk synth`       emits the synthesized CloudFormation template
+
+
+#### Resources
+- [aws cdk examples - lambda crud dynamo](https://github.com/aws-samples/aws-cdk-examples/blob/master/typescript/api-cors-lambda-crud-dynamodb/src/create.ts)
+- 
