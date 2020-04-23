@@ -11,7 +11,6 @@ The backend is a simple typescript implementation for one of the very many commo
 ![architecture diagram][architecture-diagram]
 
 ## Getting help
-
 - **Email** 108krohan [at] gmail [dot] com.
 - **Instagram** direct message @kaiserohan (I be always scrollin')
 - **TODO** "What's up? / Tell me / Contact us" page on website
@@ -39,10 +38,12 @@ $ npm run build
  * `npm run build`   compile typescript to js
  * `npm run watch`   watch for changes and compile
  * `npm run test`    perform the jest unit tests
- * `cdk deploy`      deploy this stack to your default AWS account/region
- * `cdk diff`        compare deployed stack with current state
- * `cdk synth`       emits the synthesized CloudFormation template
+ * `cdk deploy`      deploy this stack to your default AWS account/region. Alternatively, `npm run cdk deploy`
+ * `cdk diff`        compare deployed stack with current state. Alternatively, `npm run cdk diff`
+ * `cdk synth`       emits the synthesized CloudFormation template. Alternatively, `npm run cdk synth`
 
+##### One time bootstrap
+Because this stack uses assets, so the toolkit stack must be deployed to the environment. So, run `"cdk bootstrap aws://467721594212/ap-south-1`
 
 #### Resources
 - [aws cdk examples - lambda crud dynamo](https://github.com/aws-samples/aws-cdk-examples/blob/master/typescript/api-cors-lambda-crud-dynamodb/src/create.ts)

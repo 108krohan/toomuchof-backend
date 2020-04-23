@@ -12,7 +12,9 @@ export class ToomuchofBackendStack extends cdk.Stack {
     const tableDynamo = new dynamo.Table(this, 'tableCounter', {
       tableName: "Counter",
       partitionKey: { name: 'counterId', type: dynamo.AttributeType.STRING },
-      billingMode: dynamo.BillingMode.PAY_PER_REQUEST
+      billingMode: dynamo.BillingMode.PROVISIONED,
+      readCapacity: 3,
+      writeCapacity: 3
     });
     // lambda define: GET, POST
     const lambdaGetCounter = new lambda.Function(this, 'lambdaGetCounter', {
@@ -49,10 +51,11 @@ export class ToomuchofBackendStack extends cdk.Stack {
     addCorsOptions(counter);
     // cloudwatch monitors for dynamo
     // https://github.com/eladb/cdk-watchful
-    wf.watchDynamoTable('Table Counter', tableDynamo);
     wf.watchLambdaFunction('Function GetCounter', lambdaGetCounter);
     wf.watchLambdaFunction('Function PostCounter', lambdaPostCounter);
     wf.watchApiGateway('API CounterAPI', apiGatewayCounterApi);
+    // to watch dynamo, it requires read capacity units, which require provisioning...
+    wf.watchDynamoTable('Table Counter', tableDynamo);
   }
 }
 
