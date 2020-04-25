@@ -16,7 +16,7 @@ export class ToomuchofBackendStack extends cdk.Stack {
       readCapacity: 3,
       writeCapacity: 3
     });
-    // lambda define: GET, POST
+    // lambda define: GET_ONE, POST, UPDATE_ONE
     const lambdaGetCounter = new lambda.Function(this, 'lambdaGetCounter', {
       runtime: lambda.Runtime.NODEJS_12_X,
       handler: 'getCounter.getOneHandler',
@@ -29,23 +29,31 @@ export class ToomuchofBackendStack extends cdk.Stack {
       code: lambda.Code.fromAsset(path.join(__dirname, 'lambda')),
       tracing: lambda.Tracing.ACTIVE
     });
+    const lambdaUpdateOneCounter = new lambda.Function(this, 'lambdaUpdateOneCounter', {
+      runtime: lambda.Runtime.NODEJS_12_X,
+      handler: 'updateCounter.updateOneHandler',
+      code: lambda.Code.fromAsset(path.join(__dirname, 'lambda')),
+      tracing: lambda.Tracing.ACTIVE
+    });
     // lambda grant access to table dynamo
     tableDynamo.grantReadData(lambdaGetCounter);
     tableDynamo.grantWriteData(lambdaPostCounter);
+    tableDynamo.grantReadWriteData(lambdaUpdateOneCounter);
     // apiGateway define
     const apiGatewayCounterApi = new apigateway.RestApi(this, 'counter-api', {
       restApiName: 'Counter Service'
     });
     // apiGateway define integration lambda: GET, POST
-    const integrationGetCounter = new apigateway.LambdaIntegration(lambdaGetCounter);
-    // add resource path
-    const counters = apiGatewayCounterApi.root.addResource('counter');
-    // integration lambda POST
     const integrationPostCounter = new apigateway.LambdaIntegration(lambdaPostCounter);
+    const integrationGetCounter = new apigateway.LambdaIntegration(lambdaGetCounter);
+    const integrationUpdateCounter = new apigateway.LambdaIntegration(lambdaUpdateOneCounter);
+    // add root resource path, and lambdas
+    const counters = apiGatewayCounterApi.root.addResource('counter');
     counters.addMethod('POST', integrationPostCounter);
-    // add single resource path
+    // add single item level resource path, and lambdas
     const counter = counters.addResource('{counterId}');
     counter.addMethod('GET', integrationGetCounter);
+    counter.addMethod('PATCH', integrationUpdateCounter);
     // enable cross origin resource sharing
     addCorsOptions(counters);
     addCorsOptions(counter);

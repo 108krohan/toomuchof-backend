@@ -17,7 +17,13 @@ export const getOneHandler = async (event: any = {}) : Promise <any> => {
     try {
         const response = await dynamo.get(params).promise();
         console.log("consumed capacity = " + response.consumedCapacity);
-        return { statusCode: 200, body: JSON.stringify(response.Item) };
+        return {
+            statusCode: 200,
+            headers: {
+                "Access-Control-Allow-Origin": "http://localhost:3000"
+            },
+            body: response.Item.counterValue
+        };
     } catch (dbError) {
         return { statusCode: 500, body: JSON.stringify(dbError) };
     }
