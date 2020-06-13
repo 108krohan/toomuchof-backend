@@ -9,9 +9,12 @@ const RESERVED_RESPONSE = `Error: You're using AWS reserved keywords as attribut
  * Sample request: ?counterId=1-frontpage-ringer&increment=1
  */
 exports.updateOneHandler = async (event: any = {}) => {
-    console.log("starting the function");
+    console.log("Event is: " + event);
+    if (!event.body) {
+        return { statusCode: 400, body: 'Invalid request, you are missing the parameter body.' };
+    }
+    const requestedItemIncrement = typeof event.body == 'object' ? event.body : JSON.parse(event.body).increment;
     const requestedItemId = event.pathParameters.counterId;
-    const requestedItemIncrement = event.pathParameters.increment;
     // https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/GettingStarted.NodeJs.03.html#GettingStarted.NodeJs.03.03
     console.log("requestedItemID: " + requestedItemId + " requestedItemIncrement: " + requestedItemIncrement);
     const params = {
