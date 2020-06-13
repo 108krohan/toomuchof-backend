@@ -2,6 +2,10 @@ const AWS = require('aws-sdk');
 const dynamo = new AWS.DynamoDB.DocumentClient();
 const TABLE_NAME = "Counter";
 const PRIMARY_KEY = "counterId";
+/*
+ * This handler gets an existing counter in the dynamo table.
+ * Sample request: ?counterId=1-frontpage-ringer
+ */
 export const getOneHandler = async (event: any = {}) : Promise <any> => {
     console.log("request:", JSON.stringify(event, undefined, 2));
     const requestedItemId = event.pathParameters.counterId;
@@ -22,7 +26,7 @@ export const getOneHandler = async (event: any = {}) : Promise <any> => {
             headers: {
                 "Access-Control-Allow-Origin": "http://localhost:3000"
             },
-            body: response.Item.counterValue
+            body: JSON.stringify(response.Item.counterValue)
         };
     } catch (dbError) {
         return { statusCode: 500, body: JSON.stringify(dbError) };
