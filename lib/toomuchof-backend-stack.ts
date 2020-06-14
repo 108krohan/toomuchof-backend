@@ -33,7 +33,7 @@ export class ToomuchofBackendStack extends cdk.Stack {
     });
     tableCustomer.grantFullAccess(lambdaPostCustomer);
     const apiGatewayCustomerApi = new apigateway.RestApi(this, 'customer-api', {
-      restApiName: 'Customer service',
+      restApiName: 'Customer Service',
     });
     const integrationPostCustomer = new apigateway.LambdaIntegration(lambdaPostCustomer);
     const customers = apiGatewayCustomerApi.root.addResource('customer');
@@ -98,7 +98,7 @@ export function addCorsOptions(apiResource: apigateway.IResource) {
         'method.response.header.Access-Control-Allow-Headers': "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'",
         'method.response.header.Access-Control-Allow-Origin': "'*'",
         'method.response.header.Access-Control-Allow-Credentials': "'false'",
-        'method.response.header.Access-Control-Allow-Methods': "'OPTIONS,GET,PUT,POST,DELETE'",
+        'method.response.header.Access-Control-Allow-Methods': "'OPTIONS,GET,PUT,POST,DELETE,PATCH'",
       },
     }],
     passthroughBehavior: apigateway.PassthroughBehavior.NEVER,
